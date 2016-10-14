@@ -46,7 +46,7 @@ long long power (long long b, long long n, long long limit)
     if(n%2==0)
         return (h*h)%limit;
     else
-        return (h*h*b)%limit;
+        return (h*h)%limit*b%limit;
 }
 vector<long long> encrypt (string m, long long e, long long limit, long long indian)
 {
@@ -60,7 +60,6 @@ vector<long long> encrypt (string m, long long e, long long limit, long long ind
             c[i]+=m[i*indian+j];
         }
         c[i]=power(c[i],e,limit);
-        cout<<c[i]<<" ";
     }
     return c;
 }
@@ -104,18 +103,19 @@ int main()
     cout<<"Po ile bajtow chcesz kodowac?\n";
     cin>>indian;
 
-    p=generaterandom(256,1024);
+    p=generaterandom(256,256*256);
     while(!isprime(p))
-        p=generaterandom(256,1024);
-    q=generaterandom(256,1024);
+        p=generaterandom(256,256*256);
+    q=generaterandom(256,256*256);
     while(!isprime(q))
-        q=generaterandom(256,1024);
+        q=generaterandom(256,256*256);
+
 
     long long n=p*q;
     long long capn=(p-1)*(q-1);
     e=gete(capn);
     long long d=inverse(e,capn);
-    cout<<"To jest e: "<<e<<" To odwrotnosc e: "<<d<<" To jest p: "<<p<<" To jest q "<<q<<"\n";
+    cout<<"To jest e: "<<e<<" To odwrotnosc e: "<<d<<" To jest p: "<<p<<" To jest q "<<q<<" To jest n: "<<n<<"\n";
     code=encrypt(message,e,n,indian);
     cout<<"To jest zakodowana wiadomosc: ";
     for(int i=0; i<code.size(); i++)
@@ -124,6 +124,5 @@ int main()
     string newmessage;
     newmessage=decrypt(code,d,n,indian);
     cout<<newmessage<<"\n";
-
     return 0;
 }

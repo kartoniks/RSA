@@ -62,7 +62,6 @@ vector<long long> encrypt (string m, long long e, long long limit, long long ind
         {
             c[i]*=256;
             c[i]+=m[i*indian+j];
-            cout<<m[i*indian+j];
         }
         c[i]=power(c[i],e,limit);
     }

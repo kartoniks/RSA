@@ -51,17 +51,23 @@ long long power (long long b, long long n, long long limit)
 vector<long long> encrypt (string m, long long e, long long limit, long long indian)
 {
     vector<long long> c;
-    c.resize(m.size()/indian);
-    for(int i=0; i<m.size()/indian; i++)
+    long long temp=m.size();
+    if(temp%indian!=0)
+        temp+=indian-temp%indian;
+    m.resize(temp);
+    c.resize(temp/indian);
+    for(int i=0; i<temp/indian; i++)
     {
         for(int j=0; j<indian; j++)
         {
             c[i]*=256;
             c[i]+=m[i*indian+j];
+            cout<<m[i*indian+j];
         }
         c[i]=power(c[i],e,limit);
     }
     return c;
+
 }
 string decrypt (vector<long long> c, long long d, long long limit, long long indian)
 {
